@@ -10,10 +10,10 @@ class URLPowerSchedule(AbstractPowerSchedule):
         self.path_frequency: set = set()
 
     def _assign_energy(self, seeds: list[AbstractSeed]) -> list[AbstractSeed]:
-        """Assigns seed energy of 100 if not previously chosen, else assigns 1."""
+        """Assigns seed energy, assigns 1 if already chosen."""
         for seed in seeds:
             if seed not in self.path_frequency:
-                seed.energy = 100
+                seed.energy = len(self.path_frequency) + 1  # Add 1 to avoid 0 energy
             else:
                 seed.energy = 1
         
