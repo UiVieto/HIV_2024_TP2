@@ -41,16 +41,10 @@ def test_mutation_fuzzer_with_power_no_grammar(test_module):
 def test_mutation_fuzzer_with_power_with_grammar(test_module):
     gram = {
         "<start>": ["<url>"],
-        "<url>": ["<www><content><domain>"],
-        "<www>": ["www."],
+        "<url>": ["www.<content><domain>"],
         "<domain>": [".ca", ".com", ".org", ".net", ".edu", ".us"],
-        "<content>": ["<letter><letter><letter><letter><letter><letter><letter><letter>"],
-        "<letter>": [
-            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ,"k", "l", "m", 
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" ,"K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-        ],
+        "<content>": ["<word>"] * 5,
+        "<word>": ["mazes", "puginarug", "optical", "longdogechallenge"]
     }
     grammar = AbstractGrammar(gram)
     seeds = [AbstractSeed(grammar.generate_input()) for _ in range(MAX_SEEDS)]
@@ -83,7 +77,7 @@ if __name__ == '__main__':
 
     plt.plot(range(1, BUDGET+1), avg_coverage_no_power_no_grammar)
 
-    plt.title("Figure 1. Couverture moyenne pour le fuzzing de mutation\nsans power schedule ou grammaire")
+    plt.title("Figure 1. Couverture moyenne pour le fuzzing de mutation\n du cgi_decode sans power schedule ou grammaire")
     plt.xlabel("Nombre de valeurs d'entrées générées")
     plt.ylabel("Nombre de lignes couvertes")
     plt.grid(True, "both", "both")
@@ -95,7 +89,7 @@ if __name__ == '__main__':
 
     plt.plot(range(1, BUDGET+1), avg_coverage_with_power_no_grammar)
 
-    plt.title("Figure 2. Couverture moyenne pour le fuzzing de mutation\navec power schedule et sans grammaire")
+    plt.title("Figure 2. Couverture moyenne pour le fuzzing de mutation\n du cgi_decode avec power schedule et sans grammaire")
     plt.xlabel("Nombre de valeurs d'entrées générées")
     plt.ylabel("Nombre de lignes couvertes")
     plt.grid(True, "both", "both")
@@ -107,7 +101,7 @@ if __name__ == '__main__':
 
     plt.plot(range(1, BUDGET+1), avg_coverage_with_power_with_grammar)
 
-    plt.title("Figure 3. Couverture moyenne pour le fuzzing de mutation\navec power schedule et grammaire")
+    plt.title("Figure 3. Couverture moyenne pour le fuzzing de mutation\n du cgi_decode avec power schedule et grammaire")
     plt.xlabel("Nombre de valeurs d'entrées générées")
     plt.ylabel("Nombre de lignes couvertes")
     plt.grid(True, "both", "both")
